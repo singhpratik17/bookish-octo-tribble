@@ -2,15 +2,15 @@ const { gql } = require("apollo-server");
 
 const typeDef = gql`
   type Review {
-    id: String
+    id: Int
     comment: String
-    rating: Float
+    rating: Float!
     createdDate: Date
-    productId: String!
+    productId: Int!
   }
 
   type Mutation {
-    createReview(comment: String, productId: String, rating: Float): Review
+    createReview(comment: String, productId: Int!, rating: Float!): Review
   }
 `;
 
