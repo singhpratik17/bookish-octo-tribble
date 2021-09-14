@@ -9,8 +9,8 @@ const typeDef = gql`
     productId: String!
   }
 
-  type Query {
-    reviews(productId: String!): [Review]
+  type Mutation {
+    createReview(comment: String, productId: String, rating: Float): Review
   }
 `;
 

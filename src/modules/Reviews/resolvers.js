@@ -1,9 +1,13 @@
-const { reviews } = require("./mockData");
+const { Tables } = require("../../constants");
+const { insert } = require("../../dbOperations");
 
 const resolvers = {
-  Query: {
-    reviews: async (root, args, context) => {
-      return reviews;
+  Mutation: {
+    createReview: async (root, args, context) => {
+      await insert(Tables.REVIEWS, {
+        ...args,
+        createdDate: new Date(),
+      });
     },
   },
 };

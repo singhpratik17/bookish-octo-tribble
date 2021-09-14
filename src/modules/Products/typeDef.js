@@ -2,14 +2,14 @@ const { gql } = require("apollo-server");
 
 const typeDef = gql`
   type Product {
-    id: String
+    id: Int
     name: String
     rating: Float
     reviews: [Review]
   }
 
   type Query {
-    product(id: String!): Product
+    product(id: Int!): Product
   }
 `;
 

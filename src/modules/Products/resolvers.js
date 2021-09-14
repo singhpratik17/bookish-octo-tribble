@@ -1,16 +1,34 @@
-const { products } = require("./mockData");
-const { reviews } = require("../Reviews/mockData");
+const { Tables } = require("../../constants");
+const {
+  findByCriteriaAndOrder,
+  findById,
+  calculateRatings,
+} = require("../../dbOperations");
 
 const resolvers = {
   Query: {
     product: async (root, args, context) => {
-      return products[0];
+      let product = await findById(Tables.PRODUCTS, args.id);
+      const rating = await calculateRatings(args.id);
+      if (rating) {
+        product = {
+          ...product,
+          ...rating,
+        };
+      }
+      return product;
     },
   },
   Product: {
-    reviews(parent) {
-      console.warn(parent);
-      return reviews.filter((item) => item.productId === parent.id);
+    reviews: async (parent) => {
+      return await findByCriteriaAndOrder(
+        Tables.REVIEWS,
+        {
+          productId: parent.id,
+        },
+        "createdDate",
+        "desc"
+      );
     },
   },
 };
