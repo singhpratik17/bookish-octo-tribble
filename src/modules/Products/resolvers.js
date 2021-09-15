@@ -8,15 +8,7 @@ const {
 const resolvers = {
   Query: {
     product: async (root, args, context) => {
-      let product = await findById(Tables.PRODUCTS, args.id);
-      const rating = await calculateRatings(args.id);
-      if (rating) {
-        product = {
-          ...product,
-          ...rating,
-        };
-      }
-      return product;
+      return await getProduct(args);
     },
   },
   Product: {
@@ -33,4 +25,16 @@ const resolvers = {
   },
 };
 
-module.exports = resolvers;
+const getProduct = async (args) => {
+  let product = await findById(Tables.PRODUCTS, args.id);
+  const rating = await calculateRatings(args.id);
+  if (rating) {
+    product = {
+      ...product,
+      ...rating,
+    };
+  }
+  return product;
+};
+
+module.exports = { resolvers, getProduct };

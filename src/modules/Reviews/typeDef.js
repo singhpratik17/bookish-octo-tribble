@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server-express");
 
 const typeDef = gql`
   type Review {
@@ -11,6 +11,10 @@ const typeDef = gql`
 
   type Mutation {
     createReview(comment: String, productId: Int!, rating: Float!): Review
+  }
+
+  type Subscription {
+    reviewCreated(productId: Int!): Product
   }
 `;
 
